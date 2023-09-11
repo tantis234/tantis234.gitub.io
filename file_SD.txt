@@ -14,18 +14,32 @@ drive.mount('/content/drive')
 # Giao diện
 
 mode = 'dark'
-!aria2c --continue --console-log-level=error -c -x 16 -s 16 -k 1M https://raw.githubusercontent.com/tantis234/SD/main/SD%20text.txt -d /content -o links.txt
-with open("/content/links.txt") as file:
-  links = file.readlines()
 
-url = links[0]
-repo_name_start_index = url.rfind("/") + 1
-repo_name = url[repo_name_start_index:].strip()
+# Danh sách URL mới
+new_urls = [
+    "https://github.com/AUTOMATIC1111/stable-diffusion-webui",
+    "https://github.com/Mikubill/sd-webui-controlnet",
+    "https://github.com/camenduru/sd-webui-tunnels",
+    "https://github.com/ashen-sensored/stable-diffusion-webui-two-shot",
+    "https://github.com/adieyal/sd-dynamic-prompts",
+    "https://github.com/DominikDoom/a1111-sd-webui-tagcomplete",
+    "https://github.com/zanllp/sd-webui-infinite-image-browsing",
+    "https://github.com/Uminosachi/sd-webui-inpaint-anything",
+    "https://github.com/deforum-art/sd-webui-deforum",
+    "https://github.com/hako-mikan/sd-webui-lora-block-weight"
+]
 
-gitUrl = url
-gitFolder = repo_name
+# Lặp qua từng URL trong danh sách mới
+for url in new_urls:
+    repo_name_start_index = url.rfind("/") + 1
+    repo_name = url[repo_name_start_index:].strip()
 
-!git clone $gitUrl
+    gitUrl = url
+    gitFolder = repo_name
+
+    # Sử dụng git để clone từng repository
+    !git clone $gitUrl
+
 #Extension
 %cd $gitFolder/extensions
 for link in links:
